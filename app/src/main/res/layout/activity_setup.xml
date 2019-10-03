@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_def"
+    tools:context=".SetupActivity">
+
+    <ImageButton
+        android:id="@+id/setupImageButton"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/border"
+        android:layout_margin="10dp"
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/ic_action_person" />
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/setupImageButton"
+        android:id="@+id/nameLayout"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:textColorHint="@color/grey"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="8dp">
+    <EditText android:id="@+id/setupnameField"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textCursorDrawable="@color/white"
+        android:padding="20dp"
+        android:inputType="textPersonName"
+        android:textColor="@color/norm"
+        android:hint="User Name" />
+    </android.support.design.widget.TextInputLayout>
+
+    <Button
+        android:id="@+id/setupFinishBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/background"
+        android:text="Finish Setup"
+        android:layout_marginBottom="1dp"/>
+</RelativeLayout>

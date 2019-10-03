@@ -1,0 +1,59 @@
+{
+  "project_info": {
+    "project_number": "334337300853",
+    "firebase_url": "https://boocsa-73694.firebaseio.com",
+    "project_id": "boocsa-73694",
+    "storage_bucket": "boocsa-73694.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:334337300853:android:771d2bbf6078b610",
+        "android_client_info": {
+          "package_name": "com.boocsa.efcorp.boocsa"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "334337300853-0d77f60urjturrjegm1patksa4sq4fsh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.boocsa.efcorp.boocsa",
+            "certificate_hash": "8a9a764d5ee5204fd1c5aadad5e824f9462e5ff6"
+          }
+        },
+        {
+          "client_id": "334337300853-c88mmqip4t1f4fauheus71d95adqfgfm.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "334337300853-c88mmqip4t1f4fauheus71d95adqfgfm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAA7KNxrCs4XWX492nx_WImsIvrLGkygHg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "334337300853-c88mmqip4t1f4fauheus71d95adqfgfm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
