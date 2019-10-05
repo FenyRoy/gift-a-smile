@@ -84,78 +84,19 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/giftsmile/app/smile/LoginActivity.java">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/giftsmile/app/smile/SetupActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="208">
-              <caret line="439" column="84" lean-forward="true" selection-start-line="439" selection-start-column="84" selection-end-line="439" selection-end-column="84" />
-              <folding>
-                <element signature="class#2284:5160" />
-                <element signature="e#2782#6811#0" expanded="true" />
-                <element signature="e#4123#6767#0" expanded="true" />
-                <element signature="e#4947#5889#0" expanded="true" />
-                <element signature="e#5888#5889#0" expanded="true" />
-                <element signature="e#5912#6300#0" expanded="true" />
-                <element signature="e#6299#6300#0" expanded="true" />
-                <element signature="e#6766#6767#0" expanded="true" />
-                <element signature="e#6810#6811#0" expanded="true" />
-                <element signature="e#7529#18330#0" expanded="true" />
-                <element signature="e#8729#15387#0" expanded="true" />
-                <element signature="e#10094#10717#0" expanded="true" />
-                <element signature="e#10716#10717#0" expanded="true" />
-                <element signature="e#10778#15289#0" expanded="true" />
-                <element signature="e#11538#14264#0" expanded="true" />
-                <element signature="e#12281#13568#0" expanded="true" />
-                <element signature="e#13567#13568#0" expanded="true" />
-                <element signature="e#13591#14134#0" expanded="true" />
-                <element signature="e#14133#14134#0" expanded="true" />
-                <element signature="e#14263#14264#0" expanded="true" />
-                <element signature="e#14287#14890#0" expanded="true" />
-                <element signature="e#14889#14890#0" expanded="true" />
-                <element signature="e#15288#15289#0" expanded="true" />
-                <element signature="e#15386#15387#0" expanded="true" />
-                <element signature="e#15442#15973#0" expanded="true" />
-                <element signature="e#15972#15973#0" expanded="true" />
-                <element signature="e#16028#18253#0" expanded="true" />
-                <element signature="e#16608#17343#0" expanded="true" />
-                <element signature="e#17342#17343#0" expanded="true" />
-                <element signature="e#17366#17916#0" expanded="true" />
-                <element signature="e#17915#17916#0" expanded="true" />
-                <element signature="e#18252#18253#0" expanded="true" />
-                <element signature="e#18329#18330#0" expanded="true" />
-                <element signature="e#18504#19952#0" expanded="true" />
-                <element signature="e#19324#19851#0" expanded="true" />
-                <element signature="e#19850#19851#0" expanded="true" />
-                <element signature="e#19917#20118#0" expanded="true" />
-                <element signature="e#20117#20118#0" expanded="true" />
-                <element signature="e#19951#19952#0" expanded="true" />
-                <element signature="e#24397#24560#0" expanded="true" />
-                <element signature="e#24559#24560#0" expanded="true" />
-                <element signature="e#24610#25507#0" expanded="true" />
-                <element signature="e#25506#25507#0" expanded="true" />
-                <element signature="e#25764#25926#0" expanded="true" />
-                <element signature="e#25925#25926#0" expanded="true" />
-                <element signature="e#25079#28396#0" expanded="true" />
-                <element signature="e#28395#28396#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="195">
+              <caret line="45" column="40" selection-start-line="45" selection-start-column="40" selection-end-line="45" selection-end-column="40" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/verification_layout.xml">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_setup.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="212">
-              <caret line="36" column="52" lean-forward="true" selection-start-line="36" selection-start-column="52" selection-end-line="36" selection-end-column="52" />
-            </state>
-          </provider>
-          <provider editor-type-id="android-designer2" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_login.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="114">
-              <caret line="90" column="62" selection-start-line="90" selection-start-column="62" selection-end-line="90" selection-end-column="62" />
+            <state relative-caret-position="195">
+              <caret line="13" column="23" lean-forward="true" selection-start-line="13" selection-start-column="23" selection-end-line="13" selection-end-column="23" />
             </state>
           </provider>
           <provider editor-type-id="android-designer2" />
@@ -170,6 +111,15 @@
         <option value="layoutResourceFile" />
       </list>
     </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>getWindow</find>
+      <find>Main</find>
+    </findStrings>
+    <replaceStrings>
+      <replace>Setup</replace>
+    </replaceStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -187,13 +137,13 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/reg_email_passoword_dialog.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/login_email_passoword_dialog.xml" />
         <option value="$PROJECT_DIR$/app/build.gradle" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/giftsmile/app/smile/LoginActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/phone_auth_layout.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/verification_layout.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/phone_auth_layout.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/giftsmile/app/smile/LoginActivity.java" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="704" />
     <option name="width" value="642" />
     <option name="height" value="763" />
@@ -386,7 +336,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1" y="-1" width="1362" height="739" extended-state="7" />
+    <frame x="-1" y="-1" width="1362" height="739" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Captures" order="0" side_tool="true" weight="0.25" />
@@ -438,13 +388,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="165">
           <caret line="11" column="10" selection-start-line="11" selection-start-column="10" selection-end-line="11" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/giftsmile/app/smile/SetupActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="24" column="13" selection-start-line="24" selection-start-column="13" selection-end-line="24" selection-end-column="13" />
         </state>
       </provider>
     </entry>
@@ -526,14 +469,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_login.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="114">
-          <caret line="90" column="62" selection-start-line="90" selection-start-column="62" selection-end-line="90" selection-end-column="62" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/login_email_passoword_dialog.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="182">
@@ -549,13 +484,27 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/verification_layout.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="257">
+          <caret line="39" column="50" lean-forward="true" selection-start-line="39" selection-start-column="50" selection-end-line="39" selection-end-column="50" />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/phone_auth_layout.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="428">
+          <caret line="89" column="53" selection-start-line="89" selection-start-column="53" selection-end-line="89" selection-end-column="53" />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/giftsmile/app/smile/LoginActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="208">
-          <caret line="439" column="84" lean-forward="true" selection-start-line="439" selection-start-column="84" selection-end-line="439" selection-end-column="84" />
+        <state relative-caret-position="-30">
+          <caret line="95" column="29" lean-forward="true" selection-start-line="95" selection-start-column="29" selection-end-line="95" selection-end-column="29" />
           <folding>
-            <element signature="class#2284:5160" />
-            <element signature="e#2782#6811#0" expanded="true" />
             <element signature="e#4123#6767#0" expanded="true" />
             <element signature="e#4947#5889#0" expanded="true" />
             <element signature="e#5888#5889#0" expanded="true" />
@@ -605,18 +554,25 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/phone_auth_layout.xml">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_login.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="152">
-          <caret line="86" column="50" selection-start-line="86" selection-start-column="50" selection-end-line="86" selection-end-column="50" />
+        <state relative-caret-position="114">
+          <caret line="90" column="62" selection-start-line="90" selection-start-column="62" selection-end-line="90" selection-end-column="62" />
         </state>
       </provider>
       <provider editor-type-id="android-designer2" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/verification_layout.xml">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/giftsmile/app/smile/SetupActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="212">
-          <caret line="36" column="52" lean-forward="true" selection-start-line="36" selection-start-column="52" selection-end-line="36" selection-end-column="52" />
+        <state relative-caret-position="195">
+          <caret line="45" column="40" selection-start-line="45" selection-start-column="40" selection-end-line="45" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_setup.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="13" column="23" lean-forward="true" selection-start-line="13" selection-start-column="23" selection-end-line="13" selection-end-column="23" />
         </state>
       </provider>
       <provider editor-type-id="android-designer2" />

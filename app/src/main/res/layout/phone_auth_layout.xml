@@ -77,16 +77,6 @@
 
             </com.hbb20.CountryCodePicker>
 
-            <ProgressBar
-                android:id="@+id/auth_progressbar"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_below="@id/auth_number"
-                android:layout_centerHorizontal="true"
-                android:indeterminate="true"
-                android:layout_marginBottom="20dp"
-                android:visibility="invisible"/>
-
             <Button
                 android:id="@+id/auth_go_btn"
                 android:layout_width="wrap_content"
@@ -97,7 +87,7 @@
                 android:text="Next"
                 android:textSize="15sp"
                 android:fontFamily="sans-serif-medium"
-                android:layout_below="@id/auth_progressbar"
+                android:layout_below="@id/auth_number"
                 android:textColor="#FFFFFF"
                 android:layout_marginBottom="30dp"
                 />

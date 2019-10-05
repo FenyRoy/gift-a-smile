@@ -134,7 +134,7 @@ public class LoginActivity extends AppCompatActivity {
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if(task.isSuccessful())
                                             {
-                                                startActivity(new Intent(LoginActivity.this,MainActivity.class));
+                                                startActivity(new Intent(LoginActivity.this,SetupActivity.class));
                                                 overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
 
                                             }
@@ -275,7 +275,7 @@ public class LoginActivity extends AppCompatActivity {
                                                         if(task.isSuccessful())
                                                         {
                                                             regemailpassworddialog.dismiss();
-                                                            startActivity(new Intent(LoginActivity.this,MainActivity.class));
+                                                            startActivity(new Intent(LoginActivity.this,SetupActivity.class));
                                                             overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
 
                                                         }
@@ -359,7 +359,7 @@ public class LoginActivity extends AppCompatActivity {
                                    if(task.isSuccessful())
                                    {
                                        loginemailpassworddialog.dismiss();
-                                       startActivity(new Intent(LoginActivity.this,MainActivity.class));
+                                       startActivity(new Intent(LoginActivity.this,SetupActivity.class));
                                        overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
                                    }
 
@@ -444,20 +444,12 @@ public class LoginActivity extends AppCompatActivity {
                 PhneCCP = phneauthdialog.findViewById(R.id.auth_countrypicker);
                 final EditText PhneNum = phneauthdialog.findViewById(R.id.auth_number);
                 PhneCCP.registerCarrierNumberEditText(PhneNum);
-                final ProgressBar PhnePBar  = phneauthdialog.findViewById(R.id.auth_progressbar);
 
                 PhneBackBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
 
-                        if(PhnePBar.isShown())
-                        {
-                            Toast.makeText(LoginActivity.this, "Please wait until process is complete.", Toast.LENGTH_SHORT).show();
-                        }
-                        else
-                        {
-                            phneauthdialog.dismiss();
-                        }
+                        phneauthdialog.dismiss();
 
                     }
                 });
@@ -577,7 +569,7 @@ public class LoginActivity extends AppCompatActivity {
 
                     FirebaseDatabase.getInstance().getReference().child("UserInfo").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("number").setValue(PhneCCP.getFullNumberWithPlus());
                     VerificationDialog.dismiss();
-                    startActivity(new Intent(LoginActivity.this,MainActivity.class));
+                    startActivity(new Intent(LoginActivity.this,SetupActivity.class));
                     overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
                     finish();
                 }
