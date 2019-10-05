@@ -7,36 +7,88 @@
     android:background="@color/background_def"
     tools:context=".SetupActivity">
 
-    <ImageButton
-        android:id="@+id/setupImageButton"
+    <TextView
+        android:id="@+id/setup_header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="Profile Setup"
+        android:textColor="@color/colorAccent"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginTop="20dp"/>
+
+    <TextView
+        android:id="@+id/setup_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="Configure your profile"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginTop="30dp"
+        android:layout_below="@id/setup_header"/>
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/setup_image"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/border"
         android:layout_margin="10dp"
         android:scaleType="centerCrop"
-        app:srcCompat="@drawable/ic_action_person" />
+        android:background="@drawable/ic_action_person"
+        android:layout_below="@id/setup_info"/>
 
-    <android.support.design.widget.TextInputLayout
+   <EditText
+       android:id="@+id/setup_name"
+       android:layout_width="match_parent"
+       android:layout_height="50dp"
+       android:background="@drawable/accent_stroke"
+       android:hint="Name"
+       android:textColor="@color/black"
+       android:layout_below="@id/setup_image"
+       android:layout_marginStart="30dp"
+       android:layout_marginEnd="30dp"
+       android:layout_centerHorizontal="true"
+       android:gravity="center"
+       android:textAllCaps="false"
+       android:textSize="16sp"
+       android:layout_marginTop="20dp"
+       android:inputType="text"/>
+    <EditText
+        android:id="@+id/setup_email"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/setupImageButton"
-        android:id="@+id/nameLayout"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:textColorHint="@color/grey"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="8dp">
-    <EditText android:id="@+id/setupnameField"
+        android:layout_height="50dp"
+        android:background="@drawable/accent_stroke"
+        android:hint="Email"
+        android:textColor="@color/black"
+        android:layout_below="@id/setup_name"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:textAllCaps="false"
+        android:textSize="16sp"
+        android:inputType="textEmailAddress"/>
+    <EditText
+        android:id="@+id/setup_phone"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textCursorDrawable="@color/white"
-        android:padding="20dp"
-        android:inputType="textPersonName"
-        android:textColor="@color/norm"
-        android:hint="User Name" />
-    </android.support.design.widget.TextInputLayout>
+        android:layout_height="50dp"
+        android:background="@drawable/accent_stroke"
+        android:hint="Phone Number"
+        android:textColor="@color/black"
+        android:layout_below="@id/setup_email"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:textAllCaps="false"
+        android:textSize="16sp"
+        android:layout_marginTop="10dp"
+        android:inputType="number"/>
 
     <Button
         android:id="@+id/setupFinishBtn"
@@ -44,7 +96,11 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/background"
+        android:background="@drawable/accent_stroke"
         android:text="Finish Setup"
-        android:layout_marginBottom="1dp"/>
+        android:layout_marginBottom="1dp"
+        android:backgroundTint="@color/white"
+        android:textStyle="bold"
+        android:textColor="@color/colorAccent"
+        android:layout_margin="5dp"/>
 </RelativeLayout>

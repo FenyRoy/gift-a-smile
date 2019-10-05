@@ -3,30 +3,42 @@ package com.giftsmile.app.smile;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class SetupActivity extends AppCompatActivity {
 
-    private ImageButton mSetupImageBtn;
-    private EditText mNameField;
-    private Button mSubmitBtn;
+    private CircleImageView SetupImageBtn;
+    private EditText NameEditText,EmailEditText,PhoneEditText;
+    private Button SubmitBtn;
 
     private Uri mImageUri = null;
 
@@ -39,6 +51,8 @@ public class SetupActivity extends AppCompatActivity {
     private DatabaseReference mDatabaseUsers;
 
     private StorageReference mStorageImage;
+    private String name="NA",email="NA",phone="NA",profile_uri="NA";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,13 +65,16 @@ public class SetupActivity extends AppCompatActivity {
 
         mStorageImage = FirebaseStorage.getInstance().getReference().child("profile_images");
 
-        mSetupImageBtn=(ImageButton)findViewById(R.id.setupImageButton);
-        mNameField= (EditText)findViewById(R.id.setupnameField);
-        mSubmitBtn=(Button)findViewById(R.id.setupFinishBtn);
+        SetupImageBtn =findViewById(R.id.setup_image);
+
+        NameEditText = (EditText)findViewById(R.id.setup_name);
+        EmailEditText = findViewById(R.id.setup_email);
+        PhoneEditText = findViewById(R.id.setup_phone);
+        SubmitBtn =(Button)findViewById(R.id.setupFinishBtn);
 
         mProgress = new ProgressDialog(this);
 
-        mSubmitBtn.setOnClickListener(new View.OnClickListener() {
+        SubmitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -66,7 +83,7 @@ public class SetupActivity extends AppCompatActivity {
             }
         });
 
-        mSetupImageBtn.setOnClickListener(new View.OnClickListener() {
+        SetupImageBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -78,6 +95,56 @@ public class SetupActivity extends AppCompatActivity {
             }
         });
 
+        SetAllValues();
+
+    }
+
+    private void SetAllValues() {
+
+
+        mDatabaseUsers.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                if(dataSnapshot.hasChild("name"))
+                {
+                    name = dataSnapshot.child("name").getValue().toString();
+                    NameEditText.setText(name);
+                }
+                if(dataSnapshot.hasChild("email"))
+                {
+                    email = dataSnapshot.child("email").getValue().toString();
+                    EmailEditText.setText(email);
+
+                }
+                if(dataSnapshot.hasChild("profile_uri"))
+                {
+                    profile_uri = dataSnapshot.child("profile_uri").getValue().toString();
+
+                    if(!profile_uri.equals("NA"))
+                    {
+                        Glide.with(getApplicationContext()).load(profile_uri).into(SetupImageBtn);
+                    }
+                }
+                if(dataSnapshot.hasChild("number"))
+                {
+                    phone = dataSnapshot.child("number").getValue().toString();
+                    PhoneEditText.setText(phone);
+
+                }
+
+
+
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
     }
 
     private void startSetupAccout() {
@@ -85,11 +152,10 @@ public class SetupActivity extends AppCompatActivity {
         mProgress.setMessage("Uploading....");
         mProgress.setCancelable(false);
         mProgress.show();
-        final String name= mNameField.getText().toString().trim();
 
         final String user_id = mAuth.getCurrentUser().getUid();
 
-        if(!TextUtils.isEmpty(name) && mImageUri != null){
+        if(!TextUtils.isEmpty(NameEditText.getText().toString().trim()) && !TextUtils.isEmpty(EmailEditText.getText().toString().trim())  && !TextUtils.isEmpty(PhoneEditText.getText().toString().trim())  && mImageUri != null){
 
             StorageReference filepath = mStorageImage.child("Profile_Pic"+user_id);
 
@@ -98,10 +164,16 @@ public class SetupActivity extends AppCompatActivity {
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
 
+                    final String name_= NameEditText.getText().toString().trim();
+                    final String email_= EmailEditText.getText().toString().trim();
+                    final String phone_= PhoneEditText.getText().toString().trim();
+
                     String downloadUri = taskSnapshot.getMetadata().getReference().getDownloadUrl().toString();
 
-                    mDatabaseUsers.child(user_id).child("name").setValue(name);
-                    mDatabaseUsers.child(user_id).child("image").setValue(downloadUri);
+                    mDatabaseUsers.child(user_id).child("name").setValue(name_);
+                    mDatabaseUsers.child(user_id).child("email").setValue(email_);
+                    mDatabaseUsers.child(user_id).child("number").setValue(phone_);
+                    mDatabaseUsers.child(user_id).child("profile_uri").setValue(downloadUri);
                     mProgress.dismiss();
                     Intent mainIntent = new Intent(SetupActivity.this, MainActivity.class);
                     mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -110,9 +182,49 @@ public class SetupActivity extends AppCompatActivity {
             });
 
         }
+        else  if(!TextUtils.isEmpty(NameEditText.getText().toString().trim()) && !TextUtils.isEmpty(EmailEditText.getText().toString().trim())  && !TextUtils.isEmpty(PhoneEditText.getText().toString().trim())  && mImageUri == null)
+        {
+
+
+            final String name_= NameEditText.getText().toString().trim();
+            final String email_= EmailEditText.getText().toString().trim();
+            final String phone_= PhoneEditText.getText().toString().trim();
+
+            Map map = new HashMap();
+            map.put("name",name_);
+            map.put("email",email_);
+            map.put("number",phone_);
+
+            mDatabaseUsers.child(user_id).setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+
+                    if(task.isSuccessful())
+                    {
+                        Intent mainIntent = new Intent(SetupActivity.this, MainActivity.class);
+                        mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(mainIntent);
+                    }
+                    else
+                    {
+                        Toast.makeText(SetupActivity.this, "Failed to update values.", Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+
+                    Toast.makeText(SetupActivity.this, "Error : "+e.toString(), Toast.LENGTH_SHORT).show();
+
+                }
+            });
+
+
+        }
         else
         {
-            Toast.makeText(getApplicationContext(),"Fields Empty",Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(),"Fields found empty.",Toast.LENGTH_LONG).show();
             mProgress.dismiss();
         }
 
@@ -139,7 +251,7 @@ public class SetupActivity extends AppCompatActivity {
 
                 mImageUri = result.getUri();
 
-                mSetupImageBtn.setImageURI(mImageUri);
+                SetupImageBtn.setImageURI(mImageUri);
 
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
 

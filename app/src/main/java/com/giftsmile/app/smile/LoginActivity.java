@@ -491,6 +491,26 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+
+        // institution  login
+        InstitutionLoginBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                ShowToast("Institution login <<TO-DO>>");
+
+            }
+        });
+
+        //volunteer login
+        VolunteerRegBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                ShowToast("Volunteer login <<TO-DO>>");
+
+            }
+        });
     }
 
     private void ShowToast(String s) {
@@ -567,7 +587,7 @@ public class LoginActivity extends AppCompatActivity {
                 if(task.isSuccessful())
                 {
 
-                    FirebaseDatabase.getInstance().getReference().child("UserInfo").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("number").setValue(PhneCCP.getFullNumberWithPlus());
+                    FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("number").setValue(PhneCCP.getFullNumberWithPlus());
                     VerificationDialog.dismiss();
                     startActivity(new Intent(LoginActivity.this,SetupActivity.class));
                     overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
