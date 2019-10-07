@@ -128,10 +128,8 @@ public class LoginActivity extends AppCompatActivity {
                                 {
                                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                                     //Verify(user);
-                                    Map userdata = new HashMap();
-                                    userdata.put("email", finalEmail);
-                                    userdata.put("profile_uri", finalProfile_uri);
-                                    FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(userdata).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("email").setValue(finalEmail);
+                                    FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("profile_uri").setValue(finalProfile_uri).addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if(task.isSuccessful())
@@ -269,10 +267,9 @@ public class LoginActivity extends AppCompatActivity {
 
                                             if(task.isSuccessful())
                                             {
-                                                Map userdata = new HashMap();
-                                                userdata.put("name",name1);
-                                                userdata.put("email",email1);
-                                                FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(userdata).addOnCompleteListener(new OnCompleteListener<Void>() {
+
+                                                FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("name").setValue(name1);
+                                                FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("email").setValue(email1).addOnCompleteListener(new OnCompleteListener<Void>() {
                                                     @Override
                                                     public void onComplete(@NonNull Task<Void> task) {
                                                         if(task.isSuccessful())

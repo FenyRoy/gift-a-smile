@@ -1,6 +1,7 @@
 package com.giftsmile.app.smile;
 
 import android.Manifest;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -70,8 +71,7 @@ public class MainActivity extends AppCompatActivity {
     private LocationListener locationListener;
     private double MainLat, MainLng;
     private static final int REQUEST_LOCATION_PERMISSION = 1013;
-
-
+    private boolean GpsStatus=true;
 
 
     @Override
@@ -96,6 +96,23 @@ public class MainActivity extends AppCompatActivity {
                  else{
 
                      checkUserExist();
+                     mDatabaseUsers.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+                         @Override
+                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                             if(dataSnapshot.hasChild("profile_uri"))
+                             {
+                                 String uri = dataSnapshot.child("profile_uri").getValue().toString();
+                                 Glide.with(getApplicationContext()).load(uri).apply(new RequestOptions().placeholder(R.drawable.ic_account_circle)).into(MainProfileBtn);
+                             }
+
+                         }
+
+                         @Override
+                         public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                         }
+                     });
                  }
 
             }
@@ -110,23 +127,7 @@ public class MainActivity extends AppCompatActivity {
         MainViewPager.setAdapter(viewPagerAdapter);
 
         MainProfileBtn = findViewById(R.id.main_profile_btn);
-        mDatabaseUsers.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-               if(dataSnapshot.hasChild("profile_uri"))
-               {
-                   String uri = dataSnapshot.child("profile_uri").getValue().toString();
-                   Glide.with(getApplicationContext()).load(uri).apply(new RequestOptions().placeholder(R.drawable.ic_account_circle)).into(MainProfileBtn);
-               }
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
 
         MainProfileBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -163,9 +164,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private boolean IsGPSEnabled() {
-        final LocationManager manager = (LocationManager) getSystemService(LOCATION_SERVICE);
-        return manager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        locationManager = (LocationManager)getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
+
+        GpsStatus = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+
+        return GpsStatus;
     }
+
 
     private void SnackBarMessage(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
@@ -173,13 +178,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void ShowMyLocation() {
 
-        if (ActivityCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]
-                            {Manifest.permission.ACCESS_FINE_LOCATION},
-                    REQUEST_LOCATION_PERMISSION);
-        }
 
         MainLocProgressbar.setVisibility(View.VISIBLE);
         MainLocRefreshBtn.setVisibility(View.GONE);
