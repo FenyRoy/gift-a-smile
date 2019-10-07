@@ -1,4 +1,4 @@
-package com.giftsmile.app.smile;
+package com.giftsmile.app.smile.Fragments;
 
 
 import android.os.Bundle;
@@ -7,14 +7,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.giftsmile.app.smile.R;
+
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class Fragment1 extends Fragment {
+public class PeopleFragment extends Fragment {
 
 
-    public Fragment1() {
+    public PeopleFragment() {
         // Required empty public constructor
     }
 
@@ -23,7 +25,7 @@ public class Fragment1 extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_fragment1, container, false);
+        return inflater.inflate(R.layout.fragment_people, container, false);
     }
 
 }

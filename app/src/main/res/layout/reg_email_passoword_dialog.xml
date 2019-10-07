@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@android:color/transparent">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        app:cardCornerRadius="15dp"
+        android:elevation="0dp"
+        android:layout_margin="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageButton
+                android:id="@+id/reg_email_password_back_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp"
+                android:background="@drawable/circular_background"
+                android:src="@drawable/ic_arrow_back"
+                android:padding="5dp"
+                android:backgroundTint="@color/colorAccent"
+                android:tint="@color/white"/>
+
+            <TextView
+                android:id="@+id/email_password_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:text="New User"
+                android:textSize="20sp"
+                android:layout_margin="20dp"
+                android:textColor="#000000"/>
+
+            <EditText
+                android:id="@+id/reg_email_password_nametext"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:background="@drawable/accent_stroke"
+                android:layout_gravity="center_horizontal"
+                android:hint="Type in Name"
+                android:gravity="center"
+                android:textSize="14sp"
+                android:inputType="text"
+                android:layout_marginTop="20dp"/>
+
+            <EditText
+                android:id="@+id/reg_email_password_emailtext"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:background="@drawable/accent_stroke"
+                android:layout_gravity="center_horizontal"
+                android:hint="Type in Email"
+                android:gravity="center"
+                android:textSize="14sp"
+                android:inputType="textEmailAddress"
+                android:layout_marginTop="10dp"/>
+
+            <EditText
+                android:id="@+id/reg_email_password_passwordtext"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:background="@drawable/accent_stroke"
+                android:layout_gravity="center_horizontal"
+                android:hint="Type in Password"
+                android:gravity="center"
+                android:textSize="14sp"
+                android:inputType="textPassword"
+                android:layout_marginTop="10dp"/>
+
+
+            <ImageButton
+                android:id="@+id/reg_email_password_done_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/ic_done"
+                android:background="@drawable/circular_background"
+                android:backgroundTint="@color/colorAccent"
+                android:tint="@color/white"
+                android:padding="5dp"
+                android:layout_margin="20dp"
+                />
+
+            <ProgressBar
+                android:id="@+id/reg_email_password_progressbar"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="20dp"
+                android:indeterminate="true"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:indeterminateTint="@color/colorAccent"
+                style="@style/Base.Widget.AppCompat.ProgressBar"
+                android:visibility="invisible"
+                android:layout_marginBottom="20dp"/>
+
+
+
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+</RelativeLayout>
