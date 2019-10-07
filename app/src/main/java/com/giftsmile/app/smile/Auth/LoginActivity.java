@@ -26,6 +26,7 @@ import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.giftsmile.app.smile.MainActivity;
 import com.giftsmile.app.smile.R;
 import com.giftsmile.app.smile.Profile.SetupActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -41,7 +42,10 @@ import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.hbb20.CountryCodePicker;
 
 import org.json.JSONException;
@@ -68,6 +72,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText VerifyEditText;
     Button VerifyGoManualButton;
     CountryCodePicker PhneCCP;
+    Button InstitutionAuthVerifyBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -352,34 +357,34 @@ public class LoginActivity extends AppCompatActivity {
 
                         if(!TextUtils.isEmpty(email)  && !TextUtils.isEmpty(password))
                         {
-                           FirebaseAuth.getInstance().signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                               @Override
-                               public void onComplete(@NonNull Task<AuthResult> task) {
+                            FirebaseAuth.getInstance().signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
 
-                                   if(task.isSuccessful())
-                                   {
-                                       loginemailpassworddialog.dismiss();
-                                       startActivity(new Intent(LoginActivity.this,SetupActivity.class));
-                                       overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
-                                       finish();
-                                   }
+                                    if(task.isSuccessful())
+                                    {
+                                        loginemailpassworddialog.dismiss();
+                                        startActivity(new Intent(LoginActivity.this,SetupActivity.class));
+                                        overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+                                        finish();
+                                    }
 
-                                   LoginPBar.setVisibility(View.INVISIBLE);
+                                    LoginPBar.setVisibility(View.INVISIBLE);
 
-                               }
-                           }).addOnFailureListener(new OnFailureListener() {
-                               @Override
-                               public void onFailure(@NonNull final Exception e) {
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull final Exception e) {
 
-                                   Toast.makeText(LoginActivity.this, "Authentication failed. Try again.", Toast.LENGTH_SHORT).show();
-                                   Toast.makeText(LoginActivity.this, "Error : "+e.toString(), Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(LoginActivity.this, "Authentication failed. Try again.", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(LoginActivity.this, "Error : "+e.toString(), Toast.LENGTH_SHORT).show();
 
-                                   LoginPBar.setVisibility(View.INVISIBLE);
+                                    LoginPBar.setVisibility(View.INVISIBLE);
 
-                               }
+                                }
 
 
-                           });
+                            });
                         }
                         else
                         {
@@ -512,6 +517,109 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
+
+
+        /// institution verification
+
+        final Dialog InstitutionDialog = new Dialog(this);
+        InstitutionLoginBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                InstitutionDialog.setContentView(R.layout.institution_auth_dialog);
+                InstitutionDialog.setCanceledOnTouchOutside(false);
+                InstitutionDialog.setCancelable(false);
+                InstitutionDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+                ImageButton InstitutionAuthBackBtn = InstitutionDialog.findViewById(R.id.institution_auth_back_button);
+                ImageButton InstitutionAuthDoneBtn = InstitutionDialog.findViewById(R.id.institution_auth_done_button);
+
+                final EditText InstitutionAuthEmail = InstitutionDialog.findViewById(R.id.institution_auth_email_edittext);
+                final EditText InstitutionAuthPassword = InstitutionDialog.findViewById(R.id.institution_auth_password_edittext);
+
+                final ProgressBar InstitutionAuthPbar = InstitutionDialog.findViewById(R.id.institution_auth_progressbar);
+
+                InstitutionAuthVerifyBtn = InstitutionDialog.findViewById(R.id.institution_auth_verified_btn);
+
+                InstitutionAuthVerifyBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        Reloadverification();
+
+                    }
+                });
+
+                InstitutionAuthBackBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        if(InstitutionAuthPbar.isShown())
+                        {
+                            ShowToast("Please wait till process is complete.");
+                        }
+                        else
+                        {
+                            InstitutionDialog.dismiss();
+                        }
+
+                    }
+                });
+
+                InstitutionAuthDoneBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        String email ="",password ="";
+                        email=InstitutionAuthEmail.getText().toString();
+                        password = InstitutionAuthPassword.getText().toString();
+
+                        if(!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password))
+                        {
+
+                            final String finalPassword = password;
+                            final String finalEmail = email;
+                            FirebaseDatabase.getInstance().getReference().child("Institution_Mail").addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                                    for(DataSnapshot snapshot:dataSnapshot.getChildren())
+                                    {
+
+                                        if(finalEmail.equals(snapshot.child("email").getValue().toString()))
+                                        {
+                                            VerifyInstitution(finalEmail, finalPassword);
+
+                                        }
+                                        else
+                                        {
+                                            ShowToast("Not a verified mail");
+                                        }
+                                    }
+
+
+
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
+                        }
+                        else
+                        {
+                            ShowToast("Fill in the fields");
+                        }
+
+                    }
+                });
+
+                InstitutionDialog.show();
+
+
+            }
+        });
     }
 
     private void ShowToast(String s) {
@@ -577,6 +685,78 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
+
+
+    }
+
+    private void VerifyInstitution(String finalEmail, String finalPassword) {
+
+        FirebaseAuth.getInstance().signInWithEmailAndPassword(finalEmail,finalPassword).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+
+                if(task.isSuccessful())
+                {
+                    InstitutionAuthVerifyBtn.setVisibility(View.VISIBLE);
+                    VerifyMail();
+
+                }
+                else
+                {
+                    ShowToast("Verification failed. Please try again.");
+                }
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+                ShowToast(e.toString());
+
+            }
+        });
+    }
+
+    private void VerifyMail() {
+
+        FirebaseAuth.getInstance().getCurrentUser().sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+
+
+                if(task.isSuccessful())
+                {
+
+                    Reloadverification();
+
+                }
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+                ShowToast(e.toString());
+            }
+        });
+
+
+    }
+
+    private void Reloadverification() {
+
+        FirebaseAuth.getInstance().getCurrentUser().reload();
+
+        if(FirebaseAuth.getInstance().getCurrentUser().isEmailVerified())
+        {
+            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+            finish();
+        }
+        else
+        {
+            ShowToast("Email not verified");
+        }
     }
 
     private void SignInWithCredential(PhoneAuthCredential phoneAuthCredential) {

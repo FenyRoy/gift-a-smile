@@ -48,7 +48,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -59,7 +61,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     private FirebaseAuth mAuth;
-    private FirebaseAuth.AuthStateListener mAuthListener;
     private DatabaseReference mDatabaseUsers;
     private ViewPager MainViewPager;
     private TabLayout MainTabs;
@@ -82,42 +83,38 @@ public class MainActivity extends AppCompatActivity {
 
         //Firebase Authentication
         mAuth = FirebaseAuth.getInstance();
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+        if(mAuth.getCurrentUser()==null){
 
-                 if(firebaseAuth.getCurrentUser()==null){
+            Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
+            loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(loginIntent);
+            finish();
+        }
+        else{
 
-                     Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
-                     loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                     startActivity(loginIntent);
-                     finish();
-                 }
-                 else{
+            Map map = new HashMap<>();
+            map.put("email","fenyroy@gmail.com");
+            FirebaseDatabase.getInstance().getReference().child("Institution_Mail").push().setValue(map);
+            mDatabaseUsers = FirebaseDatabase.getInstance().getReference().child("Users");
+            checkUserExist();
+            mDatabaseUsers.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                     checkUserExist();
-                     mDatabaseUsers.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
-                         @Override
-                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if(dataSnapshot.hasChild("profile_uri"))
+                    {
+                        String uri = dataSnapshot.child("profile_uri").getValue().toString();
+                        Glide.with(getApplicationContext()).load(uri).apply(new RequestOptions().placeholder(R.drawable.ic_account_circle)).into(MainProfileBtn);
+                    }
 
-                             if(dataSnapshot.hasChild("profile_uri"))
-                             {
-                                 String uri = dataSnapshot.child("profile_uri").getValue().toString();
-                                 Glide.with(getApplicationContext()).load(uri).apply(new RequestOptions().placeholder(R.drawable.ic_account_circle)).into(MainProfileBtn);
-                             }
+                }
 
-                         }
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                         @Override
-                         public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                         }
-                     });
-                 }
-
-            }
-        };
-        mDatabaseUsers = FirebaseDatabase.getInstance().getReference().child("Users");
+                }
+            });
+        }
         mDatabaseUsers.keepSynced(true);
 
         MainViewPager = findViewById(R.id.main_viewpager);
@@ -317,13 +314,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        mAuth.addAuthStateListener(mAuthListener);
-
-    }
 
     private void ConnectToNet() {
 
