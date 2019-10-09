@@ -4,11 +4,10 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v7.widget.RecyclerView;
 
-import com.giftsmile.app.smile.Fragments.AddFragment;
-import com.giftsmile.app.smile.Fragments.PeopleFragment;
-import com.giftsmile.app.smile.Fragments.SearchFragment;
+import com.giftsmile.app.smile.Fragments.TrainingFragment;
+import com.giftsmile.app.smile.Fragments.DonationFragment;
+import com.giftsmile.app.smile.Fragments.ServiceFragment;
 
 public class MainViewPagerAdapter extends FragmentPagerAdapter {
 
@@ -21,10 +20,10 @@ public class MainViewPagerAdapter extends FragmentPagerAdapter {
 
         switch (position)
         {
-            case 0:return new SearchFragment();
-            case 1:return new AddFragment();
-            case 2:return new PeopleFragment();
-            default : return new SearchFragment();
+            case 0:return new ServiceFragment();
+            case 1:return new TrainingFragment();
+            case 2:return new DonationFragment();
+            default : return new ServiceFragment();
         }
 
     }
@@ -35,10 +34,10 @@ public class MainViewPagerAdapter extends FragmentPagerAdapter {
 
         switch (position)
         {
-            case 0 : return "Search";
-            case 1 : return "Add";
-            case 2 : return "People";
-            default: return "Search";
+            case 0 : return "Services";
+            case 1 : return "Trainings";
+            case 2 : return "Donation";
+            default: return "Services";
         }
     }
 
