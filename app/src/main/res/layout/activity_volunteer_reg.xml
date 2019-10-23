@@ -1,9 +1,185 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".Volunteer.VolunteerRegActivity">
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@android:color/transparent">
 
-</android.support.constraint.ConstraintLayout>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        app:cardCornerRadius="10dp"
+        >
+
+        <RelativeLayout
+            android:id="@+id/auth_relativelayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="#ffffff"
+            android:layout_margin="5dp">
+
+            <ImageButton
+                android:id="@+id/volunteer_reg_back_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp"
+                android:background="@drawable/circular_background"
+                android:src="@drawable/ic_arrow_back"
+                android:padding="5dp"
+                android:backgroundTint="@color/colorAccent"
+                android:tint="@color/white"/>
+
+            <TextView
+                android:id="@+id/volunteer_reg_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="Volunteer Registration"
+                android:textColor="@color/colorAccent"
+                android:textSize="15sp"
+                android:layout_marginTop="20dp"/>
+
+            <EditText
+                android:id="@+id/volunteer_reg_name"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_below="@id/volunteer_reg_info"
+                android:background="@drawable/accent_stroke"
+                android:layout_gravity="center_horizontal"
+                android:hint="Enter Your Name"
+                android:gravity="center"
+                android:textSize="14sp"
+                android:inputType="textPersonName"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:layout_marginTop="20dp"/>
+
+            <com.hbb20.CountryCodePicker
+                android:id="@+id/volunteer_reg_countrypicker"
+                android:layout_width="match_parent"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/accent_stroke"
+                android:layout_below="@id/volunteer_reg_name"
+                android:layout_marginTop="30dp">
+
+            </com.hbb20.CountryCodePicker>
+
+            <EditText
+                android:id="@+id/volunteer_reg_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimaryDark"
+                android:background="@drawable/accent_stroke"
+                android:hint="Mobile Number"
+                android:padding="10dp"
+                android:gravity="center"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="20dp"
+                android:inputType="number"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:layout_below="@id/volunteer_reg_countrypicker"/>
+
+            <EditText
+                android:id="@+id/volunteer_reg_Email"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@drawable/accent_stroke"
+                android:layout_gravity="center_horizontal"
+                android:hint="Enter Your Email Address"
+                android:gravity="center"
+                android:textSize="14sp"
+                android:inputType="textEmailAddress"
+                android:layout_below="@id/volunteer_reg_number"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:layout_marginTop="20dp"/>
+
+            <EditText
+                android:id="@+id/volunteer_reg_address"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@drawable/accent_stroke"
+                android:layout_gravity="center_horizontal"
+                android:hint="Enter Your Address"
+                android:gravity="center"
+                android:layout_below="@id/volunteer_reg_Email"
+                android:textSize="14sp"
+                android:inputType="textPostalAddress"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:layout_marginTop="20dp"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_below="@id/volunteer_reg_address"
+                android:hint="Enter Your Profession"
+                android:gravity="center"
+                android:background="@drawable/accent_stroke"
+                android:textSize="15dp"
+                android:id="@+id/volunteer_reg_prof"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:layout_marginTop="20dp"
+
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/volunteer_reg_prof"
+                android:id="@+id/volunteer_reg_Pbox"
+                android:layout_gravity="center"
+                android:layout_margin="20dp"
+                android:orientation="vertical">
+
+            <ProgressBar
+                android:id="@+id/volunteer_reg_progressbar"
+                android:layout_gravity="center"
+                android:indeterminate="true"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:indeterminateTint="@color/colorAccent"
+                style="@style/Base.Widget.AppCompat.ProgressBar"
+                android:visibility="gone" />
+
+            </LinearLayout>
+
+
+            <Button
+                android:id="@+id/volunteer_reg_go_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/curved_gradient_button_background"
+                android:layout_centerHorizontal="true"
+                android:backgroundTint="@color/colorAccent"
+                android:text="Submit"
+                android:textSize="15sp"
+                android:layout_below="@id/volunteer_reg_Pbox"
+                android:textColor="#FFFFFF"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="30dp"
+                />
+
+        </RelativeLayout>
+
+
+    </android.support.v7.widget.CardView>
+
+
+</RelativeLayout>
+
+
+
+

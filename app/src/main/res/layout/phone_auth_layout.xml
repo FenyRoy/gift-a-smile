@@ -36,7 +36,7 @@
                 android:tint="@color/white"/>
 
             <TextView
-                android:id="@+id/auth_info"
+                android:id="@+id/volunteer_reg_info"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
@@ -46,7 +46,7 @@
                 android:layout_marginTop="20dp"/>
 
             <EditText
-                android:id="@+id/auth_number"
+                android:id="@+id/volunteer_reg_number"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorPrimaryDark"
@@ -59,10 +59,10 @@
                 android:inputType="number"
                 android:layout_marginStart="30dp"
                 android:layout_marginEnd="30dp"
-                android:layout_below="@id/auth_countrypicker"/>
+                android:layout_below="@id/volunteer_reg_countrypicker"/>
 
             <com.hbb20.CountryCodePicker
-                android:id="@+id/auth_countrypicker"
+                android:id="@+id/volunteer_reg_countrypicker"
                 android:layout_width="match_parent"
                 android:layout_marginStart="30dp"
                 android:layout_marginEnd="30dp"
@@ -70,13 +70,13 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/accent_stroke"
-                android:layout_below="@id/auth_info"
+                android:layout_below="@id/volunteer_reg_info"
                 android:layout_marginTop="60dp">
 
             </com.hbb20.CountryCodePicker>
 
             <Button
-                android:id="@+id/auth_go_btn"
+                android:id="@+id/volunteer_reg_go_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/curved_gradient_button_background"
@@ -84,7 +84,7 @@
                 android:backgroundTint="@color/colorAccent"
                 android:text="Next"
                 android:textSize="15sp"
-                android:layout_below="@id/auth_number"
+                android:layout_below="@id/volunteer_reg_number"
                 android:textColor="#FFFFFF"
                 android:layout_marginBottom="30dp"
                 />

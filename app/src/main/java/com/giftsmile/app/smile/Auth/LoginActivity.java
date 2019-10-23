@@ -53,8 +53,6 @@ import org.json.JSONObject;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 public class LoginActivity extends AppCompatActivity {
@@ -72,7 +70,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText VerifyEditText;
     Button VerifyGoManualButton;
     CountryCodePicker PhneCCP;
-    Button InstitutionAuthVerifyBtn;
+    Button InstitutionAuthVerifyBtn,VolunteerRegCmpltBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -446,9 +444,9 @@ public class LoginActivity extends AppCompatActivity {
                 phneauthdialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
                 ImageButton PhneBackBtn = phneauthdialog.findViewById(R.id.auth_back_button);
-                Button PhneNextBtn = phneauthdialog.findViewById(R.id.auth_go_btn);
-                PhneCCP = phneauthdialog.findViewById(R.id.auth_countrypicker);
-                final EditText PhneNum = phneauthdialog.findViewById(R.id.auth_number);
+                Button PhneNextBtn = phneauthdialog.findViewById(R.id.volunteer_reg_go_btn);
+                PhneCCP = phneauthdialog.findViewById(R.id.volunteer_reg_countrypicker);
+                final EditText PhneNum = phneauthdialog.findViewById(R.id.volunteer_reg_number);
                 PhneCCP.registerCarrierNumberEditText(PhneNum);
 
                 PhneBackBtn.setOnClickListener(new View.OnClickListener() {
@@ -503,21 +501,129 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                ShowToast("Institution login <<TO-DO>>");
+                InstitutionLogin();
 
             }
         });
 
-        //volunteer login
+        //volunteer registration
         VolunteerRegBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                ShowToast("Volunteer login <<TO-DO>>");
+                VolunteerRegistration();
 
             }
         });
 
+
+
+    }
+
+    private void VolunteerRegistration(){
+
+        final Dialog VolunteerDialog = new Dialog(this);
+        VolunteerRegBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                VolunteerDialog.setContentView(R.layout.activity_volunteer_reg);
+                VolunteerDialog.setCanceledOnTouchOutside(false);
+                VolunteerDialog.setCancelable(false);
+                VolunteerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+                final EditText VolName = VolunteerDialog.findViewById(R.id.volunteer_reg_name);
+                final EditText VolMobile = VolunteerDialog.findViewById(R.id.volunteer_reg_number);
+                final EditText VolEmail = VolunteerDialog.findViewById(R.id.volunteer_reg_Email);
+                final EditText VolAddress = VolunteerDialog.findViewById(R.id.volunteer_reg_address);
+                final EditText VolProf = VolunteerDialog.findViewById(R.id.volunteer_reg_prof);
+                ImageButton VolBack = VolunteerDialog.findViewById(R.id.volunteer_reg_back_button);
+
+                final ProgressBar VolunteerRegPbar = VolunteerDialog.findViewById(R.id.volunteer_reg_progressbar);
+
+                VolunteerRegCmpltBtn = VolunteerDialog.findViewById(R.id.volunteer_reg_go_btn);
+
+                VolunteerRegCmpltBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        VolunteerRegPbar.setVisibility(View.VISIBLE);
+                        ShowToast("Btn Clicked");
+                        String name="", mobile="",email ="",address ="",prof="";
+                        name=VolName.getText().toString();
+                        mobile=VolMobile.getText().toString();
+                        email=VolEmail.getText().toString();
+                        address =VolAddress.getText().toString();
+                        prof=VolProf.getText().toString();
+
+
+                        if(!TextUtils.isEmpty(name) && !TextUtils.isEmpty(mobile)&&!TextUtils.isEmpty(email)&&!TextUtils.isEmpty(address)&&!TextUtils.isEmpty(prof)){
+
+                            ShowToast("Entered Submission");
+                            FirebaseDatabase.getInstance().getReference().child("Volunteer").child(mobile).child("name").setValue(name);
+                            FirebaseDatabase.getInstance().getReference().child("Volunteer").child(mobile).child("mobile").setValue(mobile);
+                            FirebaseDatabase.getInstance().getReference().child("Volunteer").child(mobile).child("email").setValue(email);
+                            FirebaseDatabase.getInstance().getReference().child("Volunteer").child(mobile).child("address").setValue(address);
+                            FirebaseDatabase.getInstance().getReference().child("Volunteer").child(mobile).child("prof").setValue(prof).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+
+                                    if(task.isSuccessful()){
+
+                                        startActivity(new Intent(LoginActivity.this,LoginActivity.class));
+                                        overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+                                        finish();
+                                    }
+                                    else{
+                                        ShowToast("Error Registering Volunteer, Try Again");
+                                    }
+
+                                    VolunteerRegPbar.setVisibility(View.GONE);
+
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    ShowToast("Check Your Connectivity");
+                                    VolunteerRegPbar.setVisibility(View.GONE);
+                                }
+                            });
+
+                        }else{
+
+                            ShowToast("Check The Fields above");
+                            VolunteerRegPbar.setVisibility(View.GONE);
+                        }
+
+                    }
+                });
+
+                VolBack.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        if(VolunteerRegPbar.isShown())
+                        {
+                            ShowToast("Please wait till process is complete.");
+                        }
+                        else
+                        {
+                            VolunteerDialog.dismiss();
+                        }
+
+                    }
+                });
+
+                VolunteerDialog.show();
+
+            }
+        });
+
+
+
+    }
+
+    private void InstitutionLogin() {
 
         /// institution verification
 
@@ -570,15 +676,19 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
 
+                        ShowToast("Btn Clicked");
                         String email ="",password ="";
                         email=InstitutionAuthEmail.getText().toString();
                         password = InstitutionAuthPassword.getText().toString();
 
+
                         if(!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password))
                         {
 
+                            InstitutionAuthPbar.setVisibility(View.VISIBLE);
                             final String finalPassword = password;
                             final String finalEmail = email;
+
                             FirebaseDatabase.getInstance().getReference().child("Institution_Mail").addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -606,6 +716,7 @@ public class LoginActivity extends AppCompatActivity {
 
                                 }
                             });
+                            InstitutionAuthPbar.setVisibility(View.GONE);
                         }
                         else
                         {
@@ -620,6 +731,7 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
+
     }
 
     private void ShowToast(String s) {

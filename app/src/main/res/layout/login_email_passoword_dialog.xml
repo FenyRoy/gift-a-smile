@@ -86,13 +86,13 @@
 
             <ProgressBar
                 android:id="@+id/email_password_progressbar"
+                style="@style/Base.Widget.AppCompat.ProgressBar"
+                android:layout_width="27dp"
+                android:layout_height="30dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_margin="20dp"
                 android:indeterminate="true"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
                 android:indeterminateTint="@color/colorAccent"
-                style="@style/Base.Widget.AppCompat.ProgressBar"
                 android:visibility="invisible" />
 
 

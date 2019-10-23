@@ -84,9 +84,9 @@ public class MainActivity extends AppCompatActivity {
         }
         else{
 
-            Map map = new HashMap<>();
+            /*Map map = new HashMap<>();
             map.put("email","fenyroy@gmail.com");
-            FirebaseDatabase.getInstance().getReference().child("Institution_Mail").push().setValue(map);
+            FirebaseDatabase.getInstance().getReference().child("Institution_Mail").push().setValue(map);*/
             mDatabaseUsers = FirebaseDatabase.getInstance().getReference().child("Users");
             checkUserExist();
             mDatabaseUsers.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
@@ -107,7 +107,15 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
-        mDatabaseUsers.keepSynced(true);
+
+        try{
+
+            mDatabaseUsers.keepSynced(true);
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
 
         MainViewPager = findViewById(R.id.main_viewpager);
         MainTabs = findViewById(R.id.main_tab);
