@@ -8,9 +8,22 @@ public class ServiceDetails {
     private String Type;
     private String Status;
 
+    public ServiceDetails() {
+
+    }
+
+    public ServiceDetails(String institution, String phone, String req, String type, String status) {
+        Institution = institution;
+        Phone = phone;
+        Req = req;
+        Type = type;
+        Status = status;
+    }
+
     public String getInstitution() {
         return Institution;
     }
+
 
     public void setInstitution(String institution) {
         Institution = institution;

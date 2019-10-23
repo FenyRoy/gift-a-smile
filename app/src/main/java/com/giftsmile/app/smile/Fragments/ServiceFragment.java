@@ -63,9 +63,32 @@ public class ServiceFragment extends Fragment {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
                 for(DataSnapshot dataSnapshot1: dataSnapshot.getChildren()){
 
-                    ServiceDetails s = dataSnapshot1.getValue(ServiceDetails.class);
+                    String name="Not Available",phone="Not Available",req="Not Available",status="Not Available",type="Not Available";
+
+                    if(dataSnapshot1.hasChild("Institution"))
+                    {
+                        name=dataSnapshot1.child("Institution").getValue().toString();
+                    }
+                    if(dataSnapshot1.hasChild("Phone"))
+                    {
+                        phone=dataSnapshot1.child("Phone").getValue().toString();
+                    }
+                    if(dataSnapshot1.hasChild("Req"))
+                    {
+                        req=dataSnapshot1.child("Req").getValue().toString();
+                    }
+                    if(dataSnapshot1.hasChild("Status"))
+                    {
+                        status=dataSnapshot1.child("Status").getValue().toString();
+                    }
+                    if(dataSnapshot1.hasChild("Type"))
+                    {
+                        type=dataSnapshot1.child("Type").getValue().toString();
+                    }
+                    ServiceDetails s = new ServiceDetails(name,phone,req,type,status);
                     list.add(s);
                 }
 
