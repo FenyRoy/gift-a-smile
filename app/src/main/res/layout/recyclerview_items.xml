@@ -11,11 +11,12 @@
     card_view:cardMaxElevation="5dp"
     >
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:background="#ECEFF1"
-        android:padding="10dp">
+        android:padding="10dp"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/InstitutionName"
@@ -27,45 +28,35 @@
             android:textSize="20dp" />
 
         <TextView
-            android:id="@+id/ShowStudentNameTextView"
+            android:id="@+id/InstitutionPhone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Show Student Name"
+            android:text="Phone"
             android:textColor="#000"
             android:textSize="20dp"
-            android:layout_alignParentTop="true"
-            android:layout_toRightOf="@+id/InstitutionName"
-            android:layout_toEndOf="@+id/InstitutionName"
-            android:layout_marginLeft="19dp"
-            android:layout_marginStart="19dp" />
+            />
 
         <TextView
-            android:id="@+id/StudentNumber"
+            android:id="@+id/InstitutionRequest"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Phone Number: "
+            android:text="Request"
             android:textColor="#000"
             android:textSize="20dp"
-            android:layout_below="@+id/InstitutionName"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+           />
 
         <TextView
-            android:id="@+id/ShowStudentNumberTextView"
+            android:id="@+id/InstitutionStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Show Number"
+            android:text="Status"
             android:textColor="#000"
             android:textSize="20dp"
-            android:layout_marginLeft="11dp"
-            android:layout_marginStart="11dp"
-            android:layout_below="@+id/ShowStudentNameTextView"
-            android:layout_toRightOf="@+id/StudentNumber"
-            android:layout_toEndOf="@+id/StudentNumber" />
+             />
 
-    </RelativeLayout>
+    </LinearLayout>
 
 </android.support.v7.widget.CardView>

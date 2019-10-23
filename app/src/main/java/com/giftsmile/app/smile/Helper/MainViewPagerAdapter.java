@@ -23,7 +23,7 @@ public class MainViewPagerAdapter extends FragmentPagerAdapter {
             case 0:return new ServiceFragment();
             case 1:return new TrainingFragment();
             case 2:return new DonationFragment();
-            default : return new ServiceFragment();
+            default : return new DonationFragment();
         }
 
     }
@@ -37,7 +37,7 @@ public class MainViewPagerAdapter extends FragmentPagerAdapter {
             case 0 : return "Services";
             case 1 : return "Trainings";
             case 2 : return "Donation";
-            default: return "Services";
+            default: return "Donations";
         }
     }
 

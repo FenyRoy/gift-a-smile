@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.giftsmile.app.smile.MainActivity;
 import com.giftsmile.app.smile.R;
@@ -29,18 +30,14 @@ public class ServiceFragment extends Fragment {
 
 
     DatabaseReference databaseReference;
-
-    ProgressDialog progressDialog;
-
-    List<ServiceDetails> list = new ArrayList<>();
-
     RecyclerView recyclerView;
-
-    RecyclerView.Adapter adapter ;
+    ArrayList<ServiceDetails> list;
+    RecyclerViewAdapter adapter;
 
 
     public ServiceFragment() {
         // Required empty public constructor
+
 
     }
 
@@ -58,45 +55,28 @@ public class ServiceFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
-
-        recyclerView = recyclerView.findViewById(R.id.recyclerServiceView);
-
-        recyclerView.setHasFixedSize(true);
-
+        recyclerView= view.findViewById(R.id.myRecycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
+        list = new ArrayList<ServiceDetails>();
 
-        progressDialog = new ProgressDialog(this.getActivity());
-
-        progressDialog.setMessage("Loading Data from Firebase Database");
-
-        progressDialog.show();
-
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("Requests");
-
+        databaseReference= FirebaseDatabase.getInstance().getReference().child("Requests");
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot snapshot) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot dataSnapshot1: dataSnapshot.getChildren()){
 
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-
-                    ServiceDetails serviceDetails = dataSnapshot.getValue(ServiceDetails.class);
-
-                    list.add(serviceDetails);
+                    ServiceDetails s = dataSnapshot1.getValue(ServiceDetails.class);
+                    list.add(s);
                 }
 
-                adapter = new RecyclerViewAdapter(RecyclerViewAdapter.class, list);
-
+                adapter = new RecyclerViewAdapter(getActivity(),list);
                 recyclerView.setAdapter(adapter);
-
-                progressDialog.dismiss();
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                progressDialog.dismiss();
-
+                Toast.makeText(getActivity(), "Something is Wrong", Toast.LENGTH_SHORT).show();
             }
         });
     }
