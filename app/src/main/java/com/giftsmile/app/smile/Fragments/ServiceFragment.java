@@ -3,8 +3,6 @@ package com.giftsmile.app.smile.Fragments;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -15,10 +13,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.giftsmile.app.smile.MainActivity;
 import com.giftsmile.app.smile.R;
 import com.giftsmile.app.smile.ServiceDetails;
 import com.google.firebase.auth.FirebaseAuth;
@@ -28,19 +26,22 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 
 public class ServiceFragment extends Fragment {
 
 
-    DatabaseReference databaseReference;
+    DatabaseReference databaseRequestReference,databaseUserReference;
     RecyclerView recyclerView;
     ArrayList<ServiceDetails> list;
     ServiceRecyclerViewAdapter adapter;
-    public TextView ReqInstName,ReqPhone,ReqReq;
+    public TextView ReqInstName,ReqPhone,ReqReq,NoReq;
     public Dialog RequestDialog;
     public Button ReqBtn;
+    public ProgressBar progressBar;
 
 
 
@@ -64,7 +65,7 @@ public class ServiceFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        recyclerView= view.findViewById(R.id.myRecycler);
+        recyclerView= view.findViewById(R.id.myServiceRecycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
         list = new ArrayList<ServiceDetails>();
 
@@ -82,9 +83,13 @@ public class ServiceFragment extends Fragment {
         ReqReq=RequestDialog.findViewById(R.id.DialogInstitutionRequest);
         ReqBtn=RequestDialog.findViewById(R.id.DialogHelpBtn);
 
+        progressBar=view.findViewById(R.id.serviceprgsbr);
+        NoReq=view.findViewById(R.id.noreqsermsg);
 
-        databaseReference= FirebaseDatabase.getInstance().getReference().child("Requests");
-        databaseReference.addValueEventListener(new ValueEventListener() {
+        databaseUserReference=FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+        databaseRequestReference = FirebaseDatabase.getInstance().getReference().child("Requests");
+        databaseRequestReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
@@ -116,12 +121,23 @@ public class ServiceFragment extends Fragment {
                     {
                         type=dataSnapshot1.child("Type").getValue().toString();
                     }
+                    progressBar.setVisibility(View.GONE);
+                    NoReq.setVisibility(View.GONE);
                     ServiceDetails s = new ServiceDetails(key,name,phone,req,type,status);
-                    list.add(s);
+                    if(!dataSnapshot1.hasChild("Uid")){
+                        if(type.equals("Service")){
+                            list.add(s);
+                        }
+                    }
+
                 }
 
+                if(list.isEmpty()){
+                    NoReq.setVisibility(View.VISIBLE);
+                }
                 adapter = new ServiceRecyclerViewAdapter(getActivity(),list);
                 recyclerView.setAdapter(adapter);
+
 
 
             }
@@ -184,8 +200,11 @@ public class ServiceFragment extends Fragment {
             public void onClick(View v) {
 
                 Toast.makeText(getActivity(), "Clicked", Toast.LENGTH_SHORT).show();
-                databaseReference.child(details.getKey()).child("Status").setValue("Orange");
-                databaseReference.child(details.getKey()).child("Uid").setValue(FirebaseAuth.getInstance().getUid());
+                databaseRequestReference.child(details.getKey()).child("Status").setValue("Orange");
+                databaseRequestReference.child(details.getKey()).child("Uid").setValue(FirebaseAuth.getInstance().getUid());
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy-hh-mm-ss");
+                String format = simpleDateFormat.format(new Date());
+                databaseUserReference.child("Requests").child(details.getInstitution()+" "+format).setValue(details.getKey());
                 RequestDialog.dismiss();
 
             }

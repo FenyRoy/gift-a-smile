@@ -6,11 +6,26 @@
     tools:context=".Fragments.ServiceFragment"
     android:background="@color/white">
 
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:id="@+id/serviceprgsbr"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="No Pending Requests Found"
+        android:gravity="center_horizontal"
+        android:visibility="gone"
+        android:id="@+id/noreqsermsg"/>
+
     <!-- TODO: Update blank fragment layout -->
     <android.support.v7.widget.RecyclerView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:id="@+id/myRecycler"
+        android:id="@+id/myServiceRecycler"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />

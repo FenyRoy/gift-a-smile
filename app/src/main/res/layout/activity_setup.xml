@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_def"
-    tools:context=".Profile.SetupActivity">
+    tools:context=".Profile.InstitutionSetupActivity">
 
     <TextView
         android:id="@+id/setup_header"

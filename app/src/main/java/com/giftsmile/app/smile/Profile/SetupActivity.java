@@ -33,9 +33,6 @@ import com.google.firebase.storage.UploadTask;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class SetupActivity extends AppCompatActivity {
@@ -195,7 +192,7 @@ public class SetupActivity extends AppCompatActivity {
                         mDatabaseUsers.child(user_id).child("number").setValue(phone_);
                         mDatabaseUsers.child(user_id).child("profile_uri").setValue(downloadUri);
                         mProgress.dismiss();
-                        Intent mainIntent = new Intent(SetupActivity.this, MainActivity.class);
+                        Intent mainIntent = new Intent(com.giftsmile.app.smile.Profile.SetupActivity.this, MainActivity.class);
                         mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(mainIntent);
                         finish();
@@ -203,7 +200,7 @@ public class SetupActivity extends AppCompatActivity {
                     }
                     else
                     {
-                        Toast.makeText(SetupActivity.this, "Updating user details encountered some error. Try again.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(com.giftsmile.app.smile.Profile.SetupActivity.this, "Updating user details encountered some error. Try again.", Toast.LENGTH_SHORT).show();
                     }
 
                 }
@@ -211,7 +208,7 @@ public class SetupActivity extends AppCompatActivity {
                 @Override
                 public void onFailure(@NonNull Exception e) {
 
-                    Toast.makeText(SetupActivity.this, "Error : "+e.toString(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(com.giftsmile.app.smile.Profile.SetupActivity.this, "Error : "+e.toString(), Toast.LENGTH_SHORT).show();
 
                 }
             });
@@ -233,7 +230,7 @@ public class SetupActivity extends AppCompatActivity {
 
                     if(task.isSuccessful())
                     {
-                        Intent mainIntent = new Intent(SetupActivity.this, MainActivity.class);
+                        Intent mainIntent = new Intent(com.giftsmile.app.smile.Profile.SetupActivity.this, MainActivity.class);
                         mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(mainIntent);
                         finish();
@@ -293,7 +290,7 @@ public class SetupActivity extends AppCompatActivity {
 
                 Exception error = result.getError();
                 String err = error.toString();
-                Toast.makeText(SetupActivity.this,err,Toast.LENGTH_LONG).show();
+                Toast.makeText(com.giftsmile.app.smile.Profile.SetupActivity.this,err,Toast.LENGTH_LONG).show();
             }
         }
     }
