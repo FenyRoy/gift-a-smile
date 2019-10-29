@@ -1,7 +1,10 @@
 package com.giftsmile.app.smile.Fragments;
 
 
-import android.app.ProgressDialog;
+import android.app.Dialog;
+import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -11,12 +14,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.giftsmile.app.smile.MainActivity;
 import com.giftsmile.app.smile.R;
-import com.giftsmile.app.smile.RecyclerViewAdapter;
 import com.giftsmile.app.smile.ServiceDetails;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -24,7 +29,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.List;
+
 
 public class ServiceFragment extends Fragment {
 
@@ -32,7 +37,11 @@ public class ServiceFragment extends Fragment {
     DatabaseReference databaseReference;
     RecyclerView recyclerView;
     ArrayList<ServiceDetails> list;
-    RecyclerViewAdapter adapter;
+    ServiceRecyclerViewAdapter adapter;
+    public TextView ReqInstName,ReqPhone,ReqReq;
+    public Dialog RequestDialog;
+    public Button ReqBtn;
+
 
 
     public ServiceFragment() {
@@ -59,15 +68,34 @@ public class ServiceFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
         list = new ArrayList<ServiceDetails>();
 
+        RequestDialog = new Dialog(getActivity());
+        RequestDialog.setContentView(R.layout.request_dialog);
+        RequestDialog.setCancelable(true);
+        RequestDialog.setCanceledOnTouchOutside(true);
+        int width = (int)(getResources().getDisplayMetrics().widthPixels*0.80);
+        int height= (int)(getResources().getDisplayMetrics().heightPixels*0.70);
+        RequestDialog.getWindow().setLayout(width,height);
+        RequestDialog.findViewById(R.id.dscroll_view).setHorizontalScrollBarEnabled(false);
+        RequestDialog.findViewById(R.id.dscroll_view).setVerticalScrollBarEnabled(false);
+        ReqInstName=RequestDialog.findViewById(R.id.DialogInstitutionName);
+        ReqPhone=RequestDialog.findViewById(R.id.DialogInstitutionPhone);
+        ReqReq=RequestDialog.findViewById(R.id.DialogInstitutionRequest);
+        ReqBtn=RequestDialog.findViewById(R.id.DialogHelpBtn);
+
+
         databaseReference= FirebaseDatabase.getInstance().getReference().child("Requests");
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
+                list.clear();
                 for(DataSnapshot dataSnapshot1: dataSnapshot.getChildren()){
 
-                    String name="Not Available",phone="Not Available",req="Not Available",status="Not Available",type="Not Available";
+                    String key="null",name="Not Available",phone="Not Available",req="Not Available",status="Not Available",type="Not Available";
 
+                    if(dataSnapshot1.hasChildren()){
+                        key=dataSnapshot1.getKey().toString();
+                    }
                     if(dataSnapshot1.hasChild("Institution"))
                     {
                         name=dataSnapshot1.child("Institution").getValue().toString();
@@ -88,13 +116,17 @@ public class ServiceFragment extends Fragment {
                     {
                         type=dataSnapshot1.child("Type").getValue().toString();
                     }
-                    ServiceDetails s = new ServiceDetails(name,phone,req,type,status);
+                    ServiceDetails s = new ServiceDetails(key,name,phone,req,type,status);
                     list.add(s);
                 }
 
-                adapter = new RecyclerViewAdapter(getActivity(),list);
+                adapter = new ServiceRecyclerViewAdapter(getActivity(),list);
                 recyclerView.setAdapter(adapter);
+
+
             }
+
+
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -102,5 +134,86 @@ public class ServiceFragment extends Fragment {
                 Toast.makeText(getActivity(), "Something is Wrong", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    public class ServiceRecyclerViewAdapter extends RecyclerView.Adapter<ServiceRecyclerViewAdapter.MyViewHolder> {
+
+        Context context;
+        ArrayList<ServiceDetails> serviceDetails;
+        Integer pos;
+
+
+        public ServiceRecyclerViewAdapter(Context c, ArrayList<ServiceDetails> s){
+            context=c;
+            serviceDetails=s;
+        }
+
+        @NonNull
+        @Override
+        public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            return new MyViewHolder(LayoutInflater.from(context).inflate(R.layout.recyclerview_items,parent, false));
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
+            holder.name.setText(serviceDetails.get(position).getInstitution());
+            holder.phone.setText(serviceDetails.get(position).getPhone());
+            holder.request.setText(serviceDetails.get(position).getReq());
+            //  holder.status.setText(serviceDetails.get(position).getStatus());
+
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ServiceDetails Details =  serviceDetails.get(position);
+                    ShowDialog(Details);
+                    RequestDialog.show();
+
+                }
+            });
+        }
+
+        private void ShowDialog(final ServiceDetails details) {
+
+
+            ReqInstName.setText(details.getInstitution());
+            ReqPhone.setText(details.getPhone());
+            ReqReq.setText(details.getReq());
+
+        ReqBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Toast.makeText(getActivity(), "Clicked", Toast.LENGTH_SHORT).show();
+                databaseReference.child(details.getKey()).child("Status").setValue("Orange");
+                databaseReference.child(details.getKey()).child("Uid").setValue(FirebaseAuth.getInstance().getUid());
+                RequestDialog.dismiss();
+
+            }
+        });
+
+
+        }
+
+        @Override
+        public int getItemCount() {
+            return serviceDetails.size();
+        }
+
+        class MyViewHolder extends RecyclerView.ViewHolder{
+
+            TextView name,phone,request,status;
+            public MyViewHolder(View itemView) {
+                super(itemView);
+
+                name = itemView.findViewById(R.id.InstitutionName);
+                phone=itemView.findViewById(R.id.InstitutionPhone);
+                request=itemView.findViewById(R.id.InstitutionRequest);
+                // status=itemView.findViewById(R.id.InstitutionStatus);
+
+            }
+        }
+
+
+
     }
 }

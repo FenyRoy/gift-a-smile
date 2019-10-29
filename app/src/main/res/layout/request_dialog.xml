@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_margin="10dp"
+    android:background="@color/white"
+    >
+
+
+    <ScrollView
+        android:id="@+id/dscroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/accent_stroke"
+            android:padding="10dp"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/dname"
+                android:layout_width="wrap_content"
+                android:background="@color/white"
+                android:textColor="@color/colorPrimaryDark"
+                android:layout_gravity="center"
+                android:padding="5dp"
+                android:layout_margin="5dp"
+                android:layout_height="wrap_content"
+                android:textSize="25dp"
+                android:textStyle="bold"
+                android:text="Request"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/accent_stroke"
+                android:padding="10dp"
+                android:layout_margin="5dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Name: "
+                android:textColor="#000"
+                android:textSize="15dp" />
+            <TextView
+                android:id="@+id/DialogInstitutionName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Institution Name: "
+                android:textColor="#000"
+                android:textSize="15dp" />
+
+
+            </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/accent_stroke"
+            android:padding="10dp"
+            android:layout_margin="5dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Phone: "
+                android:textColor="#000"
+                android:textSize="15dp" />
+
+            <TextView
+                android:id="@+id/DialogInstitutionPhone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Phone"
+                android:singleLine="true"
+                android:textColor="#000"
+                android:textSize="15dp"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/accent_stroke"
+            android:padding="10dp"
+            android:layout_margin="5dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:id="@+id/reqreqtxt"
+                android:layout_height="wrap_content"
+                android:text="Request: "
+                android:layout_alignParentStart="true"
+                android:textColor="#000"
+                android:textSize="15dp" />
+
+            <TextView
+                android:id="@+id/DialogInstitutionRequest"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/reqreqtxt"
+                android:gravity="center"
+                android:text="Request"
+                android:textColor="#000"
+                android:textSize="15dp"
+                />
+
+        </LinearLayout>
+
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:padding="10dp"
+            android:id="@+id/DialogHelpBtn"
+            android:layout_margin="10dp"
+            android:background="@drawable/curved_gradient_button_background"
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            android:text="Help"
+            android:textAllCaps="false"/>
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+</LinearLayout>

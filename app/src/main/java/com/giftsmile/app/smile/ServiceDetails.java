@@ -2,6 +2,7 @@ package com.giftsmile.app.smile;
 
 public class ServiceDetails {
 
+    private String Key;
     private String Institution;
     private String Phone;
     private String Req;
@@ -12,12 +13,21 @@ public class ServiceDetails {
 
     }
 
-    public ServiceDetails(String institution, String phone, String req, String type, String status) {
+    public ServiceDetails(String key,String institution, String phone, String req, String type, String status) {
+        Key = key;
         Institution = institution;
         Phone = phone;
         Req = req;
         Type = type;
         Status = status;
+    }
+
+    public String getKey() {
+        return Key;
+    }
+
+    public void setKey(String key) {
+        Key = key;
     }
 
     public String getInstitution() {
