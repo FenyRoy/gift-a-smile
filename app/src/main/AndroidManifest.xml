@@ -16,6 +16,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".InstitutionSetupActivity"></activity>
+        <activity android:name=".InstitutionMainActivity" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"

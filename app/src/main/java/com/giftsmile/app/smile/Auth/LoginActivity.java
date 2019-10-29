@@ -26,9 +26,10 @@ import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.giftsmile.app.smile.InstitutionMainActivity;
 import com.giftsmile.app.smile.MainActivity;
-import com.giftsmile.app.smile.R;
 import com.giftsmile.app.smile.Profile.SetupActivity;
+import com.giftsmile.app.smile.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -42,10 +43,7 @@ import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.hbb20.CountryCodePicker;
 
 import org.json.JSONException;
@@ -278,7 +276,7 @@ public class LoginActivity extends AppCompatActivity {
                                                         if(task.isSuccessful())
                                                         {
                                                             regemailpassworddialog.dismiss();
-                                                            startActivity(new Intent(LoginActivity.this,SetupActivity.class));
+                                                            startActivity(new Intent(LoginActivity.this, SetupActivity.class));
                                                             overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
                                                             finish();
                                                         }
@@ -362,7 +360,7 @@ public class LoginActivity extends AppCompatActivity {
                                     if(task.isSuccessful())
                                     {
                                         loginemailpassworddialog.dismiss();
-                                        startActivity(new Intent(LoginActivity.this,SetupActivity.class));
+                                        startActivity(new Intent(LoginActivity.this, SetupActivity.class));
                                         overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
                                         finish();
                                     }
@@ -689,34 +687,10 @@ public class LoginActivity extends AppCompatActivity {
                             final String finalPassword = password;
                             final String finalEmail = email;
 
-                            FirebaseDatabase.getInstance().getReference().child("Institution_Mail").addValueEventListener(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            VerifyInstitution(finalEmail, finalPassword);
 
-                                    for(DataSnapshot snapshot:dataSnapshot.getChildren())
-                                    {
-
-                                        if(finalEmail.equals(snapshot.child("email").getValue().toString()))
-                                        {
-                                            VerifyInstitution(finalEmail, finalPassword);
-
-                                        }
-                                        else
-                                        {
-                                            ShowToast("Not a verified mail");
-                                        }
-                                    }
-
-
-
-                                }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                }
-                            });
                             InstitutionAuthPbar.setVisibility(View.GONE);
+
                         }
                         else
                         {
@@ -809,8 +783,21 @@ public class LoginActivity extends AppCompatActivity {
 
                 if(task.isSuccessful())
                 {
-                    InstitutionAuthVerifyBtn.setVisibility(View.VISIBLE);
-                    VerifyMail();
+
+                    if(FirebaseAuth.getInstance().getCurrentUser().isEmailVerified())
+                    {
+                        FirebaseDatabase.getInstance().getReference().child("Institutions").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Name").setValue("Name");
+                        startActivity(new Intent(LoginActivity.this, InstitutionMainActivity.class));
+                        overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+                        finish();
+                    }
+                    else
+                    {
+                        VerifyMail();
+                        ShowToast("Email not verified");
+                    }
+                   // InstitutionAuthVerifyBtn.setVisibility(View.VISIBLE);
+
 
                 }
                 else
@@ -861,6 +848,7 @@ public class LoginActivity extends AppCompatActivity {
 
         if(FirebaseAuth.getInstance().getCurrentUser().isEmailVerified())
         {
+
             startActivity(new Intent(LoginActivity.this, MainActivity.class));
             overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
             finish();
@@ -882,7 +870,7 @@ public class LoginActivity extends AppCompatActivity {
 
                     FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("number").setValue(PhneCCP.getFullNumberWithPlus());
                     VerificationDialog.dismiss();
-                    startActivity(new Intent(LoginActivity.this,SetupActivity.class));
+                    startActivity(new Intent(LoginActivity.this, SetupActivity.class));
                     overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
                     finish();
                 }

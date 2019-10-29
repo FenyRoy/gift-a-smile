@@ -16,6 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:textColor="@color/black"
+        android:id="@+id/pageblank"
         android:text="This Page is currently not available" />
 
     </RelativeLayout>

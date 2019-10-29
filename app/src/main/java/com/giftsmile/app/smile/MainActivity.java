@@ -40,9 +40,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -53,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private FirebaseAuth mAuth;
-    private DatabaseReference mDatabaseUsers;
+    private DatabaseReference mDatabaseUsers,mDatabaseInstitutions;
     private ViewPager MainViewPager;
     private TabLayout MainTabs;
     private MainViewPagerAdapter viewPagerAdapter;
@@ -88,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
             map.put("email","fenyroy@gmail.com");
             FirebaseDatabase.getInstance().getReference().child("Institution_Mail").push().setValue(map);*/
             mDatabaseUsers = FirebaseDatabase.getInstance().getReference().child("Users");
+            mDatabaseInstitutions=FirebaseDatabase.getInstance().getReference().child("Institutions");
             checkUserExist();
             mDatabaseUsers.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
                 @Override
@@ -130,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                startActivity(new Intent(MainActivity.this,SetupActivity.class));
+                startActivity(new Intent(MainActivity.this, SetupActivity.class));
 
             }
         });
@@ -295,7 +294,7 @@ public class MainActivity extends AppCompatActivity {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(false)
                 .setTitle("Enable Location")
-                .setMessage("App needs to access your location. Please enable location to continue further.")
+                .setMessage("App needs to access your location. Please enable High Accuracy location to continue further.")
                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -352,18 +351,39 @@ public class MainActivity extends AppCompatActivity {
 
         final String user_id = mAuth.getCurrentUser().getUid();
 
-        mDatabaseUsers.addValueEventListener(new ValueEventListener() {
+        mDatabaseInstitutions.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.hasChild(user_id)){
 
-                if(!dataSnapshot.hasChild(user_id) || !dataSnapshot.child(user_id).hasChild("name") || !dataSnapshot.child(user_id).hasChild("email") || !dataSnapshot.child(user_id).hasChild("number")) {
-
-                    Intent setupIntent = new Intent(MainActivity.this, SetupActivity.class);
-                    setupIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(setupIntent);
+                    Intent institutionIntent = new Intent(MainActivity.this,InstitutionMainActivity.class);
+                    startActivity(institutionIntent);
                     finish();
-                }
 
+                }
+                else {
+
+                    mDatabaseUsers.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                            if(!dataSnapshot.hasChild(user_id) || !dataSnapshot.child(user_id).hasChild("name") || !dataSnapshot.child(user_id).hasChild("email") || !dataSnapshot.child(user_id).hasChild("number")) {
+
+                                Intent setupIntent = new Intent(MainActivity.this, SetupActivity.class);
+                                setupIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(setupIntent);
+                                finish();
+                            }
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+
+                }
             }
 
             @Override
@@ -371,6 +391,8 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+
 
     }
 
