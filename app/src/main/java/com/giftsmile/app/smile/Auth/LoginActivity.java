@@ -43,7 +43,10 @@ import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.hbb20.CountryCodePicker;
 
 import org.json.JSONException;
@@ -60,7 +63,7 @@ public class LoginActivity extends AppCompatActivity {
     LoginButton FBLoginButton;
     Button EmailPasswordBtn, MobileNumberBtn,InstitutionLoginBtn,VolunteerRegBtn;
     PhoneAuthProvider.OnVerificationStateChangedCallbacks Callbacks;
-    String VerificationID="-";
+    String VerificationID="-",email;
     Dialog VerificationDialog;
     ProgressBar VerifyProgressbar;
     ImageButton VerifyManualButton,VerifyBackButton;
@@ -775,7 +778,8 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    private void VerifyInstitution(String finalEmail, String finalPassword) {
+    private void VerifyInstitution(final String finalEmail, String finalPassword) {
+
 
         FirebaseAuth.getInstance().signInWithEmailAndPassword(finalEmail,finalPassword).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
@@ -786,15 +790,38 @@ public class LoginActivity extends AppCompatActivity {
 
                     if(FirebaseAuth.getInstance().getCurrentUser().isEmailVerified())
                     {
-                        FirebaseDatabase.getInstance().getReference().child("Institutions").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Name").setValue("Name");
+                        FirebaseDatabase.getInstance().getReference().child("Institutions").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("name").setValue("Name");
                         startActivity(new Intent(LoginActivity.this, InstitutionMainActivity.class));
                         overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
                         finish();
                     }
                     else
                     {
-                        VerifyMail();
-                        ShowToast("Email not verified");
+
+                        FirebaseDatabase.getInstance().getReference().child("InstitutionMails").addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                for(DataSnapshot dataSnapshot1: dataSnapshot.getChildren()){
+
+                                    if (dataSnapshot1.hasChildren()){
+                                        email=dataSnapshot1.child("email").getValue().toString();
+                                        if(email.equals(finalEmail)){
+
+                                            VerifyMail();
+                                            ShowToast("Verification mail send");
+
+                                        }
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
+
+                        ShowToast("Unautorised Entry");
                     }
                    // InstitutionAuthVerifyBtn.setVisibility(View.VISIBLE);
 

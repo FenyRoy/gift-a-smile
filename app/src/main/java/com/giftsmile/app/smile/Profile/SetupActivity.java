@@ -39,7 +39,7 @@ public class SetupActivity extends AppCompatActivity {
 
     private CircleImageView SetupImageViewBtn;
     private ImageButton SetupImageBtn;
-    private EditText NameEditText,EmailEditText,PhoneEditText;
+    private EditText NameEditText,EmailEditText,PhoneEditText,ProfEditText;
     private Button SubmitBtn;
 
     private Uri mImageUri = null;
@@ -53,7 +53,7 @@ public class SetupActivity extends AppCompatActivity {
     private DatabaseReference mDatabaseUsers;
 
     private StorageReference mStorageImage;
-    private String name="NA",email="NA",phone="NA",profile_uri="NA";
+    private String name="NA",email="NA",phone="NA",profile_uri="NA",prof="NA";
 
 
     @Override
@@ -73,6 +73,7 @@ public class SetupActivity extends AppCompatActivity {
         EmailEditText = findViewById(R.id.setup_email);
         PhoneEditText = findViewById(R.id.setup_phone);
         SubmitBtn =(Button)findViewById(R.id.setupFinishBtn);
+        ProfEditText = findViewById(R.id.setup_prof);
 
         mProgress = new ProgressDialog(this);
 
@@ -138,7 +139,12 @@ public class SetupActivity extends AppCompatActivity {
                     PhoneEditText.setText(phone);
 
                 }
+                if(dataSnapshot.hasChild("profession"))
+                {
+                    prof = dataSnapshot.child("profession").getValue().toString();
+                    ProfEditText.setText(prof);
 
+                }
 
 
 
@@ -161,7 +167,7 @@ public class SetupActivity extends AppCompatActivity {
 
         final String user_id = mAuth.getCurrentUser().getUid();
 
-        if(!TextUtils.isEmpty(NameEditText.getText().toString().trim()) && !TextUtils.isEmpty(EmailEditText.getText().toString().trim())  && !TextUtils.isEmpty(PhoneEditText.getText().toString().trim())  && mImageUri != null){
+        if(!TextUtils.isEmpty(NameEditText.getText().toString().trim()) && !TextUtils.isEmpty(EmailEditText.getText().toString().trim())  && !TextUtils.isEmpty(PhoneEditText.getText().toString().trim()) && !TextUtils.isEmpty(ProfEditText.getText().toString().trim()) && mImageUri != null){
 
             final StorageReference filepath = mStorageImage.child("Profile_Pic"+user_id);
 
@@ -186,10 +192,12 @@ public class SetupActivity extends AppCompatActivity {
                         final String name_= NameEditText.getText().toString().trim();
                         final String email_= EmailEditText.getText().toString().trim();
                         final String phone_= PhoneEditText.getText().toString().trim();
+                        final String profession = ProfEditText.getText().toString().trim();
 
                         mDatabaseUsers.child(user_id).child("name").setValue(name_);
                         mDatabaseUsers.child(user_id).child("email").setValue(email_);
                         mDatabaseUsers.child(user_id).child("number").setValue(phone_);
+                        mDatabaseUsers.child(user_id).child("profession").setValue(profession);
                         mDatabaseUsers.child(user_id).child("profile_uri").setValue(downloadUri);
                         mProgress.dismiss();
                         Intent mainIntent = new Intent(com.giftsmile.app.smile.Profile.SetupActivity.this, MainActivity.class);
@@ -221,9 +229,11 @@ public class SetupActivity extends AppCompatActivity {
             final String name_= NameEditText.getText().toString().trim();
             final String email_= EmailEditText.getText().toString().trim();
             final String phone_= PhoneEditText.getText().toString().trim();
+            final String profession = ProfEditText.getText().toString().trim();
 
             mDatabaseUsers.child(user_id).child("name").setValue(name_);
             mDatabaseUsers.child(user_id).child("email").setValue(email_);
+            mDatabaseUsers.child(user_id).child("profession").setValue(profession);
             mDatabaseUsers.child(user_id).child("number").setValue(phone_).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {

@@ -42,6 +42,8 @@ public class TrainingFragment extends Fragment {
     public Dialog RequestDialog;
     public Button ReqBtn;
     public ProgressBar progressBar;
+    public String key="null",name="Not Available",phone="Not Available",req="Not Available",status="Not Available",type="Not Available",uid="Not Available",instId="Not Available",uname="Not Available",unumber="Not Available";
+
 
 
 
@@ -94,10 +96,21 @@ public class TrainingFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
+
+
                 list.clear();
                 for(DataSnapshot dataSnapshot1: dataSnapshot.getChildren()){
 
-                    String key="null",name="Not Available",phone="Not Available",req="Not Available",status="Not Available",type="Not Available";
+                    key="null";
+                    name="Not Available";
+                    phone="Not Available";
+                    req="Not Available";
+                    status="Not Available";
+                    type="Not Available";
+                    uid="Not Available";
+                    instId="Not Available";
+                    uname="Not Available";
+                    unumber="Not Available";
 
                     if(dataSnapshot1.hasChildren()){
                         key=dataSnapshot1.getKey().toString();
@@ -122,9 +135,40 @@ public class TrainingFragment extends Fragment {
                     {
                         type=dataSnapshot1.child("Type").getValue().toString();
                     }
+                    if(dataSnapshot1.hasChild("InstID"))
+                    {
+                        instId=dataSnapshot1.child("InstID").getValue().toString();
+                    }
+                    if(dataSnapshot1.hasChild("Uid"))
+                    {
+                        uid=dataSnapshot1.child("Uid").getValue().toString();
+                    }
+
+                    FirebaseDatabase.getInstance().getReference().child("Users").child(uid).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot2) {
+
+
+                            if(dataSnapshot2.hasChild("name")){
+                                uname=dataSnapshot2.child("name").getValue().toString();
+                            }
+                            if(dataSnapshot2.hasChild("number")){
+                                unumber=dataSnapshot2.child("number").getValue().toString();
+                            }
+
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            Toast.makeText(getActivity(), "Error Loading Database", Toast.LENGTH_SHORT).show();
+
+                        }
+                    });
                     progressBar.setVisibility(View.GONE);
                     NoReq.setVisibility(View.GONE);
-                    ServiceDetails s = new ServiceDetails(key,name,phone,req,type,status);
+                    ServiceDetails s = new ServiceDetails(key,name,phone,req,type,status,instId,uid,uname,unumber);
                     if(!dataSnapshot1.hasChild("Uid")){
                         if(type.equals("Training")){
                             list.add(s);
@@ -206,7 +250,7 @@ public class TrainingFragment extends Fragment {
                     databaseRequestReference.child(details.getKey()).child("Uid").setValue(FirebaseAuth.getInstance().getUid());
                     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy-hh-mm-ss");
                     String format = simpleDateFormat.format(new Date());
-                    databaseUserReference.child("Requests").child(details.getInstitution()+format).setValue(details.getKey());
+                    databaseUserReference.child("Requests").child(details.getKey()).setValue("Request");
                     RequestDialog.dismiss();
 
                 }

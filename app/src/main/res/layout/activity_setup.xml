@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_def"
-    tools:context=".Profile.InstitutionSetupActivity">
+    tools:context=".Profile.SetupActivity">
 
     <TextView
         android:id="@+id/setup_header"
@@ -112,6 +112,22 @@
         android:layout_marginTop="10dp"
         android:inputType="number"/>
 
+    <EditText
+        android:id="@+id/setup_prof"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/accent_stroke"
+        android:hint="Profession"
+        android:textColor="@color/black"
+        android:layout_below="@id/setup_phone"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:textAllCaps="false"
+        android:textSize="16sp"
+        android:layout_marginTop="10dp"
+        android:inputType="text"/>
     <Button
         android:id="@+id/setupFinishBtn"
         android:layout_width="match_parent"

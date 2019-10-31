@@ -12,4 +12,8 @@
     <color name="grey">#8F8F8F</color>
     <color name="background_material_light">#B8B8B8</color>
     <color name="foreground_material_light">#000000</color>
+    <color name="red">#FF0000</color>
+    <color name="orange">#FFA500</color>
+    <color name="yellow">#FFFF00</color>
+    <color name="green">#00FF00</color>
 </resources>
