@@ -52,5 +52,68 @@
 
     </RelativeLayout>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/inst_main_actionbar_wrapper"
+        android:id="@+id/inst_main_display_bar"
+        android:padding="5dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:text="Previous Requests "
+            android:id="@+id/inst_req_gen_text"
+            android:padding="10dp"
+            android:gravity="center"
+            android:layout_marginStart="20dp"
+            android:textColor="@color/black"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="20dp"
+            android:id="@+id/inst_make_new_req"
+            android:text="+ Request"
+            android:textAllCaps="false"
+            android:background="@drawable/curved_gradient_button_background"
+            android:textColor="@color/white"/>
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/inst_main_display_bar">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="No  Requests Found"
+        android:padding="10dp"
+        android:gravity="center_horizontal"
+        android:visibility="gone"
+        android:id="@+id/noreqpenmsg"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:padding="10dp"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/myRequestRecycler"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+
+
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_centerInParent="true"
+        android:id="@+id/requestprgsbr"
+        />
+
+    </RelativeLayout>
 
 </RelativeLayout>

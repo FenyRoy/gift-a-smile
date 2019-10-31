@@ -71,6 +71,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         FacebookSdk.sdkInitialize(getApplicationContext());
 
+        if(!IsConnectedToNet()){
+            Toast.makeText(this, "Enable Your Internet Connectivity", Toast.LENGTH_SHORT).show();
+        }
         //Firebase Authentication
         mAuth = FirebaseAuth.getInstance();
         if(mAuth.getCurrentUser()==null){
@@ -129,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                startActivity(new Intent(MainActivity.this, SetupActivity.class));
+                startActivity(new Intent(MainActivity.this, ProfileActivity.class));
 
             }
         });

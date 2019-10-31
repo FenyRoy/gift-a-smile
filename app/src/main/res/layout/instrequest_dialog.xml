@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_margin="10dp"
+    android:background="@color/white"
+    >
+
+
+    <ScrollView
+        android:id="@+id/dscroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/accent_stroke"
+            android:padding="10dp"
+            android:orientation="vertical">
+
+
+
+            <TextView
+                android:id="@+id/dname"
+                android:layout_width="wrap_content"
+                android:background="@color/white"
+                android:textColor="@color/colorPrimaryDark"
+                android:layout_gravity="center"
+                android:padding="5dp"
+                android:layout_margin="5dp"
+                android:layout_height="wrap_content"
+                android:textSize="25dp"
+                android:textStyle="bold"
+                android:text="Request"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/accent_stroke"
+                android:padding="10dp"
+                android:layout_margin="5dp">
+
+
+
+                <TextView
+                    android:id="@+id/inst_DialogInstitutionRequest"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/reqreqtxt"
+                    android:gravity="center"
+                    android:text="Request"
+                    android:textColor="#000"
+                    android:textSize="15dp"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/accent_stroke"
+                android:padding="10dp"
+                android:layout_margin="5dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Name: "
+                    android:textColor="#000"
+                    android:textSize="12dp" />
+                <TextView
+                    android:id="@+id/inst_DialogInstitutionName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Institution Name: "
+                    android:textColor="#000"
+                    android:textSize="16dp" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/accent_stroke"
+                android:padding="10dp"
+                android:layout_margin="5dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Phone: "
+                    android:textColor="#000000"
+                    android:textSize="12dp" />
+
+                <TextView
+                    android:id="@+id/inst_DialogInstitutionPhone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/grey"
+                    android:gravity="center"
+                    android:text="Phone"
+                    android:singleLine="true"
+                    android:textColor="@color/green"
+                    android:textSize="16dp"
+                    />
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:padding="5dp">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:padding="5dp"
+                android:id="@+id/inst_service_denied_btn"
+                android:layout_margin="10dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:background="@color/red"
+                android:textColor="@color/white"
+                android:visibility="gone"
+                android:textSize="17dp"
+                android:text="Denied"
+                android:textAllCaps="false"/>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:padding="5dp"
+                    android:id="@+id/inst_service_verified_btn"
+                    android:layout_margin="10dp"
+                    android:layout_below="@id/inst_service_denied_btn"
+                    android:layout_centerHorizontal="true"
+                    android:background="@color/yellow"
+                    android:textColor="@color/black"
+                    android:textSize="17dp"
+                    android:visibility="gone"
+                    android:text="Verified"
+                    android:textAllCaps="false"/>
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:padding="5dp"
+                    android:id="@+id/inst_service_completed_btn"
+                    android:layout_margin="10dp"
+                    android:layout_below="@id/inst_service_verified_btn"
+                    android:layout_centerHorizontal="true"
+                    android:background="@color/green"
+                    android:visibility="gone"
+                    android:textColor="@color/white"
+                    android:textSize="17dp"
+                    android:text="Completed"
+                    android:textAllCaps="false"/>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+</LinearLayout>
